@@ -4,6 +4,17 @@ public class TranferenciaSpec {
 	private String hashOrigem;
 	private String hashDestino;
 	private Double valor;
+	private String tipo;
+
+	
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
 	public Double getValor() {
 		return valor;

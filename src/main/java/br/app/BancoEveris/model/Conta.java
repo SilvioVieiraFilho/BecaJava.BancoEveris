@@ -18,6 +18,7 @@ public class Conta extends BaseResponse {
 	private String hash;
 	private String nome;
     @CPF
+    @Column(unique = true)
 	private String cpf;
 	private Double saldo;
 

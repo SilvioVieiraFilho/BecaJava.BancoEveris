@@ -9,6 +9,7 @@ import br.app.BancoEveris.model.Conta;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Long> {
+	
 	public Optional<Conta> findByHash(String hash);
 	//public Optional<Conta> findBysaldo(double saldo , String hash);
    

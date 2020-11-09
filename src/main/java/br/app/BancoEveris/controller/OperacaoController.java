@@ -36,6 +36,7 @@ public class OperacaoController {
 		try {
 			BaseResponse response = service.sacar(operacaoSpec);
 			return ResponseEntity.status(response.StatusCode).body(response);
+			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
 		}

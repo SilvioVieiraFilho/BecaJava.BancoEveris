@@ -123,28 +123,21 @@ public class OperacaoService {
 			return base;
 
 		}
-		
-		if(operacaoSpec.getValor() > conta1.get().getSaldo()  )  {
-			
-			
+
+		if (operacaoSpec.getValor() > conta1.get().getSaldo()) {
+
 			base.Message = "O valor Inserido esta Abaixo do seu Saldo Tente Novamente";
 
 			return base;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+
 		conta1.get().setSaldo(conta1.get().getSaldo() - operacaoSpec.getValor());
 		conta2.get().setSaldo(conta2.get().getSaldo() + operacaoSpec.getValor());
 
 		operacao.setContaOrigem(conta1.get());
 		operacao.setContaDestino(conta2.get());
 		operacao.setValor(operacaoSpec.getValor());
+		operacao.setTipo(operacaoSpec.getTipo());
 
 		repositoryConta.save(conta1.get());
 		repositoryConta.save(conta2.get());

@@ -1,9 +1,9 @@
 package br.app.BancoEveris.spec;
 
 public class OperacaoSpec {
+
 	private double valor;
 	private String tipo;
-
 	private String hash;
 
 	public double getValor() {

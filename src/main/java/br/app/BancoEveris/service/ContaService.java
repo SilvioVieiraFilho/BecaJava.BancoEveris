@@ -21,6 +21,10 @@ public class ContaService {
 
 	public BaseResponse inserir(ContaSpec contaSpec) {
 		Conta conta = new Conta();
+		
+		Optional<Conta> conta1 = repository.findByHash(contaSpec.getHash());
+			
+		
 		BaseResponse base = new BaseResponse();
 		base.StatusCode = 400;
 
@@ -33,11 +37,14 @@ public class ContaService {
 			base.Message = "O CPF do cliente não foi preenchido.";
 			return base;
 		}
+		
+	
 
 		if (contaSpec.getHash() == "") {
 			base.Message = "O Hash do cliente não foi preenchido.";
 			return base;
 		}
+		
 		conta.setSaldo(0.0);
 
 		conta.setNome(contaSpec.getNome());
@@ -51,6 +58,8 @@ public class ContaService {
 	}
 
 	public Conta obter(Long id) {
+		
+		
 		Optional<Conta> cliente = repository.findById(id);
 
 		Conta response = new Conta();
@@ -65,13 +74,18 @@ public class ContaService {
 		response.Message = "Cliente obtido com sucesso";
 		response.StatusCode = 200;
 		return response;
+	
+	
+	
 	}
 
 	public ContaList listar() {
 
-		List<Conta> lista = repository.findAll();
+		List<Conta> lista = repository.findAll(); // Lista Todas as contas
 
 		ContaList response = new ContaList();
+		
+		
 		response.setContas(lista);
 		response.StatusCode = 200;
 		response.Message = "Clientes obtidos com sucesso.";
