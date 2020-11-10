@@ -22,10 +22,9 @@ public class ContaService {
 	@Autowired
 	private ContaRepository repository;
 	@Autowired
-    private OperacaoRepository _repository;
+	private OperacaoRepository _repository;
 	@Autowired
-    private OperacaoService _operacaoService;
-	
+	private OperacaoService _operacaoService;
 
 	public BaseResponse inserir(ContaRequest contaRequest) {
 
@@ -45,8 +44,8 @@ public class ContaService {
 			return base;
 		}
 
-		if (contaRequest.getHash() == "") {
-			base.Message = "O Hash do cliente não foi preenchido.";
+		if (contaRequest.getNome().isEmpty()) {
+			base.Message = "O Nome do cliente não foi preenchido.";
 			return base;
 		}
 
@@ -54,10 +53,9 @@ public class ContaService {
 
 		conta.setNome(contaRequest.getNome());
 		conta.setCpf(contaRequest.getCpf());
-		
+
 		UUID uuid = UUID.randomUUID();
-		conta.setHash(     uuid.toString()  );
-		
+		conta.setHash(uuid.toString());
 
 		repository.save(conta);
 
@@ -84,6 +82,14 @@ public class ContaService {
 
 			return response;
 		}
+		
+		if (cliente.isEmpty()) {
+			response.StatusCode = 400;
+			response.Message = "Id não encontrado.";
+			return response;
+		}
+		
+		
 
 		response.setHash(cliente.get().getHash());
 		response.setSaldo(cliente.get().getSaldo());
@@ -106,10 +112,6 @@ public class ContaService {
 
 		return response;
 	}
-	
-	
-	
-	
 
 	public BaseResponse atualizar(Long id, ContaRequest contaRequest) {
 		Conta conta = new Conta();
@@ -154,7 +156,7 @@ public class ContaService {
 		response.StatusCode = 200;
 		return response;
 	}
-	
+
 	public ContaResponse Saldo(String hash) {
 
 		ContaResponse response = new ContaResponse();
@@ -166,16 +168,14 @@ public class ContaService {
 			response.Message = "Conta não encontrada!!";
 			return response;
 		}
-		
+
 		double saldo = _operacaoService.Saldo(conta.getId());
-		
-		
+
 		response.setSaldo(saldo);
 		response.setNome(conta.getNome());
 		response.setHash(conta.getHash());
 		response.StatusCode = 200;
 		return response;
 	}
+
 }
-
-

@@ -104,8 +104,20 @@ public class OperacaoService {
 
 		Operacao operacao = new Operacao();
 
+		
+		if (conta1 == null) {
+			base.StatusCode = 404;
+			base.Message = "Conta origem não foi encontrada tente novamente";
+			return base;
+		}
+		if (conta2 == null) {
+			base.StatusCode = 404;
+			base.Message = "A conta  destino não foi  encontrada  tente novamente";
+			return base;
+		}
+		
 		base.StatusCode = 400;
-
+		
 		if (operacaoSpec.getValor() == 0) {
 
 			base.Message = "O valor Esta abaixo do limite Tente novamente ";
