@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.app.BancoEveris.model.BaseResponse;
+import br.app.BancoEveris.response.*;
+import br.app.BancoEveris.request.OperacaoRequest;
+import br.app.BancoEveris.request.TranferenciaRequest;
 import br.app.BancoEveris.service.OperacaoService;
-import br.app.BancoEveris.spec.OperacaoSpec;
-import br.app.BancoEveris.spec.TranferenciaSpec;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -22,9 +22,11 @@ public class OperacaoController {
 	private OperacaoService service;
 
 	@PostMapping(path = "/depositos")
-	public ResponseEntity depositar(@RequestBody OperacaoSpec operacaoSpec) {
+	public ResponseEntity depositar(@RequestBody OperacaoRequest operacaoRequest) {
 		try {
-			BaseResponse response = service.depositar(operacaoSpec);
+			
+			BaseResponse response = service.depositar(operacaoRequest);
+			
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
@@ -32,9 +34,9 @@ public class OperacaoController {
 	}
 
 	@PostMapping(path = "/saques")
-	public ResponseEntity sacar(@RequestBody OperacaoSpec operacaoSpec) {
+	public ResponseEntity sacar(@RequestBody OperacaoRequest operacaoRequest) {
 		try {
-			BaseResponse response = service.sacar(operacaoSpec);
+			BaseResponse response = service.sacar(operacaoRequest);
 			return ResponseEntity.status(response.StatusCode).body(response);
 			
 		} catch (Exception e) {
@@ -43,7 +45,7 @@ public class OperacaoController {
 	}
 
 	@PostMapping(path = "/transferencia")
-	public ResponseEntity transferir(@RequestBody TranferenciaSpec operacaoSpec) {
+	public ResponseEntity transferir(@RequestBody TranferenciaRequest operacaoSpec) {
 		try {
 			BaseResponse response = service.transferir(operacaoSpec);
 			return ResponseEntity.status(response.StatusCode).body(response);

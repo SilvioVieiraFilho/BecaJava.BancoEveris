@@ -1,8 +1,8 @@
-package br.app.BancoEveris.spec;
+package br.app.BancoEveris.response;
 
 import java.util.List;
 
-import br.app.BancoEveris.model.BaseResponse;
+
 import br.app.BancoEveris.model.Conta;
 
 public class ContaList extends BaseResponse {

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.app.BancoEveris.model.BaseResponse;
-import br.app.BancoEveris.model.Conta;
-import br.app.BancoEveris.service.ContaService;
-import br.app.BancoEveris.spec.ContaList;
-import br.app.BancoEveris.spec.ContaSpec;
 
+import br.app.BancoEveris.model.Conta;
+import br.app.BancoEveris.request.ContaRequest;
+import br.app.BancoEveris.response.BaseResponse;
+import br.app.BancoEveris.response.ContaList;
+import br.app.BancoEveris.response.ContaResponse;
+import br.app.BancoEveris.service.ContaService;
 
 @RestController
 @RequestMapping("/contas")
@@ -27,9 +28,12 @@ public class ContaController extends BaseController {
 	private ContaService service;
 
 	@PostMapping
-	public ResponseEntity inserir(@RequestBody ContaSpec contaSpec) { // Inserir Conta
+	public ResponseEntity inserir(@RequestBody ContaRequest contaRequest) { // Inserir Conta
 		try {
-			BaseResponse response = service.inserir(contaSpec);
+
+			BaseResponse response = service.inserir(contaRequest);
+			
+			
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: HASH não está disponível! ");
@@ -37,10 +41,11 @@ public class ContaController extends BaseController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity obter(@PathVariable Long id) {  // 
+	
+	public ResponseEntity obter(@PathVariable Long id) { //
 		try {
 
-			Conta response = service.obter(id);
+			ContaResponse response = service.obter(id);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
@@ -58,9 +63,9 @@ public class ContaController extends BaseController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity atualizar(@RequestBody ContaSpec contaSpec, @PathVariable Long id) {
+	public ResponseEntity atualizar(@RequestBody ContaRequest contaRequest, @PathVariable Long id) {
 		try {
-			BaseResponse response = service.atualizar(id, contaSpec);
+			BaseResponse response = service.atualizar(id, contaRequest);
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
@@ -76,5 +81,25 @@ public class ContaController extends BaseController {
 			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
 		}
 	}
+
+	@GetMapping(path = "/saldo/{hash}")
+	public ResponseEntity Saldo(@PathVariable String hash) {
+		try {
+			ContaResponse response = service.Saldo(hash);
+			return ResponseEntity.status(response.StatusCode).body(response);
+		} catch (Exception e) {
+			
+			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

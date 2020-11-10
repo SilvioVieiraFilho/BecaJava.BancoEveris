@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Operacao extends BaseResponse {
+public class Operacao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

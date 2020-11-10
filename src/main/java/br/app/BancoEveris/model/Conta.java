@@ -1,6 +1,8 @@
 package br.app.BancoEveris.model;
 
-import javax.persistence.Column;
+import java.beans.Transient;
+
+import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import br.com.caelum.stella.hibernate.validator.CPF;
 
 @Entity
-public class Conta extends BaseResponse {
+public class Conta{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
@@ -20,7 +22,11 @@ public class Conta extends BaseResponse {
     @CPF
     @Column(unique = true)
 	private String cpf;
+    
+   //@Transient
 	private Double saldo;
+    
+    
 
 	public Double getSaldo() {
 		return saldo;

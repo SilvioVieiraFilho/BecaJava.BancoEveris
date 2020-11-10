@@ -1,6 +1,6 @@
-package br.app.BancoEveris.spec;
+package br.app.BancoEveris.request;
 
-public class ContaSpec {
+public class ContaRequest  {
 	private String nome;
 	private String cpf;
 	private String hash;
