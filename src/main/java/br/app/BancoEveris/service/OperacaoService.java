@@ -175,8 +175,15 @@ public class OperacaoService {
 				saldo -= o.getValor();
 				break;
 			case "T":
+				
+				if(o.getContaDestino().getId() == contaId ) {
+					
 				saldo -= o.getValor();
-				break;
+				}
+				if(o.getContaOrigem().getId() == contaId) {
+					saldo += o.getValor();
+				}
+					break;
 			default:
 				break;
 			}
