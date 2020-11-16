@@ -138,15 +138,22 @@ public class OperacaoService {
 
 		operacao.setContaOrigem(conta1);
 		operacao.setContaDestino(conta2);
+		
 
 		operacao.setValor(operacaoSpec.getValor());
 		operacao.setTipo(operacaoSpec.getTipo());
+		
+		
+	
 
 		repositoryConta.save(conta1);
 		repositoryConta.save(conta2);
 
+		operacao.setTipo("T");
+		
+		
 		repository.save(operacao);
-
+       
 		base.StatusCode = 200;
 		base.Message = "Transferencia realizada com sucesso.";
 		return base;
