@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.app.BancoEveris.response.*;
+import br.app.BancoEveris.service.imp.OperacaoServiceImp;
 import br.app.BancoEveris.request.OperacaoRequest;
 import br.app.BancoEveris.request.TranferenciaRequest;
-import br.app.BancoEveris.service.OperacaoService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/operacao")
 public class OperacaoController {
 	@Autowired
-	private OperacaoService service;
+	private OperacaoServiceImp service;
 
 	@PostMapping(path = "/depositos")
 	public ResponseEntity depositar(@RequestBody OperacaoRequest operacaoRequest) {
