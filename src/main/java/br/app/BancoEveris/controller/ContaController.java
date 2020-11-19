@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.app.BancoEveris.model.Conta;
 import br.app.BancoEveris.request.ContaRequest;
 import br.app.BancoEveris.response.BaseResponse;
 import br.app.BancoEveris.response.ContaList;
 import br.app.BancoEveris.response.ContaResponse;
 import br.app.BancoEveris.service.imp.ContaServiceImp;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/contas")
 public class ContaController extends BaseController {
