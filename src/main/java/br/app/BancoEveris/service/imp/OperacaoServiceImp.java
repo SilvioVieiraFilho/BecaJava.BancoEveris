@@ -31,33 +31,26 @@ public class OperacaoServiceImp implements OperacaoService {
 		BaseResponse base = new BaseResponse();
 		base.StatusCode = 400;
 
-		if (operacaoRequest.getTipo() == "") {
-			base.Message = "Insira o tipo D (deposito)";
-			return base;
-		}
-
 		if (operacaoRequest.getValor() <= 0) {
-
 			base.Message = "O Valor do cliente não foi preenchido.";
-
 			return base;
-
 		}
 
-		op.setTipo(operacaoRequest.getTipo());
+		if (operacaoRequest.getHash() == "" || operacaoRequest.getHash() == null) {
+			base.Message = "Hash não digitado.";
+			return base;
+		}
+
 		op.setValor(operacaoRequest.getValor());
 		op.setContaOrigem(conta);
 
 		conta.setSaldo(conta.getSaldo() + operacaoRequest.getValor());
 
 		repositoryConta.save(conta);
-		
+
 		op.setTipo("D");
 
 		repository.save(op);
-		
-		
-		
 
 		base.StatusCode = 200;
 		base.Message = "Deposito realizado com sucesso.";
@@ -65,24 +58,22 @@ public class OperacaoServiceImp implements OperacaoService {
 	}
 
 	public BaseResponse sacar(OperacaoRequest operacaoSpecSacar) {
-
 		Conta conta = repositoryConta.findByHash(operacaoSpecSacar.getHash());
-
 		Operacao op = new Operacao();
-
 		BaseResponse base = new BaseResponse();
-
 		base.StatusCode = 400;
 
 		if (operacaoSpecSacar.getValor() > conta.getSaldo()) {
-
 			base.Message = "Saque nao pode ser efetuado  valor do saldo menor ";
 			return base;
-
 		}
 
+		if (operacaoSpecSacar.getValor() <= 0) {
+			base.Message = "Informe o valor para realizar o saque";
+			return base;
+		}
+		op.setTipo("S");
 		op.setValor(operacaoSpecSacar.getValor());
-		op.setTipo(operacaoSpecSacar.getTipo());
 		op.setContaOrigem(conta);
 
 		conta.setSaldo(conta.getSaldo() - operacaoSpecSacar.getValor());
@@ -97,17 +88,12 @@ public class OperacaoServiceImp implements OperacaoService {
 	}
 
 	public BaseResponse transferir(TranferenciaRequest operacaoSpec) {
-
 		Conta conta1 = repositoryConta.findByHash(operacaoSpec.getHashOrigem());
 		Conta conta2 = repositoryConta.findByHash(operacaoSpec.getHashDestino());
 
-		ContaResponse contaa = new ContaResponse();
-
 		BaseResponse base = new BaseResponse();
-
 		Operacao operacao = new Operacao();
 
-		
 		if (conta1 == null) {
 			base.StatusCode = 404;
 			base.Message = "Conta origem não foi encontrada tente novamente";
@@ -118,21 +104,16 @@ public class OperacaoServiceImp implements OperacaoService {
 			base.Message = "A conta  destino não foi  encontrada  tente novamente";
 			return base;
 		}
-		
+
 		base.StatusCode = 400;
-		
+
 		if (operacaoSpec.getValor() == 0) {
-
 			base.Message = "O valor Esta abaixo do limite Tente novamente ";
-
 			return base;
-
 		}
 
 		if (operacaoSpec.getValor() > conta1.getSaldo()) {
-
 			base.Message = "O valor Inserido esta Abaixo do seu Saldo Tente Novamente";
-
 			return base;
 		}
 
@@ -141,22 +122,16 @@ public class OperacaoServiceImp implements OperacaoService {
 
 		operacao.setContaOrigem(conta1);
 		operacao.setContaDestino(conta2);
-		
 
 		operacao.setValor(operacaoSpec.getValor());
-		operacao.setTipo(operacaoSpec.getTipo());
-		
-		
-	
 
 		repositoryConta.save(conta1);
 		repositoryConta.save(conta2);
 
 		operacao.setTipo("T");
-		
-		
+
 		repository.save(operacao);
-       
+
 		base.StatusCode = 200;
 		base.Message = "Transferencia realizada com sucesso.";
 		return base;
@@ -172,8 +147,6 @@ public class OperacaoServiceImp implements OperacaoService {
 		Conta contaDestino = new Conta();
 		contaDestino.setId(contaId);
 
-		
-		
 		List<Operacao> lista = repository.findOperacoesPorConta(contaId);
 
 		for (Operacao o : lista) {
@@ -185,22 +158,20 @@ public class OperacaoServiceImp implements OperacaoService {
 				saldo -= o.getValor();
 				break;
 			case "T":
-				
-				if(o.getContaDestino().getId() == contaId ) {
-					
-				saldo -= o.getValor();
+
+				if (o.getContaDestino().getId() == contaId) {
+
+					saldo -= o.getValor();
 				}
-				if(o.getContaOrigem().getId() == contaId) {
+				if (o.getContaOrigem().getId() == contaId) {
 					saldo += o.getValor();
 				}
-					break;
+				break;
 			default:
 				break;
 			}
 		}
 
-		
-		
 		return saldo;
 	}
 

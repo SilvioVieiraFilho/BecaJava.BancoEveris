@@ -18,18 +18,15 @@ import br.app.BancoEveris.response.ContaResponse;
 import br.app.BancoEveris.service.ContaService;
 
 @Service
-public class ContaServiceImp implements ContaService{
+public class ContaServiceImp implements ContaService {
 	@Autowired
 	private ContaRepository repository;
-	@Autowired
-	private OperacaoRepository _repository;
+
 	@Autowired
 	private OperacaoServiceImp _operacaoService;
 
-	public BaseResponse inserir(ContaRequest contaRequest)     {
-
+	public BaseResponse inserir(ContaRequest contaRequest) {
 		Conta conta = new Conta();
-
 		ContaResponse base = new ContaResponse();
 
 		base.StatusCode = 400;
@@ -50,7 +47,6 @@ public class ContaServiceImp implements ContaService{
 		}
 
 		conta.setSaldo(0.0);
-
 		conta.setNome(contaRequest.getNome());
 		conta.setCpf(contaRequest.getCpf());
 
@@ -71,9 +67,7 @@ public class ContaServiceImp implements ContaService{
 	}
 
 	public ContaResponse obter(Long id) {
-
 		Optional<Conta> cliente = repository.findById(id);
-
 		ContaResponse response = new ContaResponse();
 
 		if (cliente.isEmpty()) {
@@ -82,14 +76,6 @@ public class ContaServiceImp implements ContaService{
 
 			return response;
 		}
-		
-		if (cliente.isEmpty()) {
-			response.StatusCode = 400;
-			response.Message = "Id não encontrado.";
-			return response;
-		}
-		
-		
 
 		response.setHash(cliente.get().getHash());
 		response.setSaldo(cliente.get().getSaldo());
@@ -97,13 +83,10 @@ public class ContaServiceImp implements ContaService{
 		response.StatusCode = 200;
 
 		return response;
-
 	}
 
 	public ContaList listar() {
-
-		List<Conta> lista = repository.findAll(); // Lista Todas as contas
-
+		List<Conta> lista = repository.findAll();
 		ContaList response = new ContaList();
 
 		response.setContas(lista);
@@ -118,17 +101,17 @@ public class ContaServiceImp implements ContaService{
 		BaseResponse base = new BaseResponse();
 		base.StatusCode = 400;
 
-		if (contaRequest.getNome() == "") {
+		if (contaRequest.getNome() == "" || contaRequest.getNome() == null) {
 			base.Message = "O nome do cliente não foi preenchido.";
 			return base;
 		}
 
-		if (contaRequest.getCpf() == "") {
+		if (contaRequest.getCpf() == "" || contaRequest.getCpf() == null) {
 			base.Message = "O CPF do cliente não foi preenchido.";
 			return base;
 		}
 
-		if (contaRequest.getHash() == "") {
+		if (contaRequest.getHash() == "" || contaRequest.getHash() == null) {
 			base.Message = "O Hash do cliente não foi preenchido.";
 			return base;
 		}
@@ -158,7 +141,6 @@ public class ContaServiceImp implements ContaService{
 	}
 
 	public ContaResponse Saldo(String hash) {
-
 		ContaResponse response = new ContaResponse();
 		response.StatusCode = 400;
 
@@ -177,5 +159,4 @@ public class ContaServiceImp implements ContaService{
 		response.StatusCode = 200;
 		return response;
 	}
-
 }

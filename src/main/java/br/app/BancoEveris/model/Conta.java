@@ -24,15 +24,15 @@ public class Conta{
 	private String cpf;
     
    //@Transient
-	private Double saldo;
+	private double saldo;
     
     
 
-	public Double getSaldo() {
+	public double getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(Double saldo) {
+	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
 

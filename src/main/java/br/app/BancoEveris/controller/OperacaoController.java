@@ -24,12 +24,10 @@ public class OperacaoController {
 	@PostMapping(path = "/depositos")
 	public ResponseEntity depositar(@RequestBody OperacaoRequest operacaoRequest) {
 		try {
-			
 			BaseResponse response = service.depositar(operacaoRequest);
-			
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Hash não confere.");
 		}
 	}
 
@@ -38,9 +36,8 @@ public class OperacaoController {
 		try {
 			BaseResponse response = service.sacar(operacaoRequest);
 			return ResponseEntity.status(response.StatusCode).body(response);
-			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Hash não confere.");
 		}
 	}
 

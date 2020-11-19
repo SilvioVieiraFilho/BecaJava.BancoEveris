@@ -31,8 +31,7 @@ public class ContaController extends BaseController {
 		try {
 
 			BaseResponse response = service.inserir(contaRequest);
-			
-			
+
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: HASH não está disponível! ");
@@ -40,7 +39,7 @@ public class ContaController extends BaseController {
 	}
 
 	@GetMapping(path = "/{id}")
-	
+
 	public ResponseEntity obter(@PathVariable Long id) { //
 		try {
 
@@ -87,18 +86,8 @@ public class ContaController extends BaseController {
 			ContaResponse response = service.Saldo(hash);
 			return ResponseEntity.status(response.StatusCode).body(response);
 		} catch (Exception e) {
-			
+
 			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
