@@ -161,10 +161,10 @@ public class OperacaoServiceImp implements OperacaoService {
 
 				if (o.getContaDestino().getId() == contaId) {
 
-					saldo -= o.getValor();
+					saldo += o.getValor();
 				}
 				if (o.getContaOrigem().getId() == contaId) {
-					saldo += o.getValor();
+					saldo -= o.getValor();
 				}
 				break;
 			default:
