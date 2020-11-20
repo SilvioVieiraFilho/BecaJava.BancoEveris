@@ -174,5 +174,4 @@ public class OperacaoServiceImp implements OperacaoService {
 
 		return saldo;
 	}
-
 }
